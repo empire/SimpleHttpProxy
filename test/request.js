@@ -86,4 +86,27 @@ describe('request', function(){
       done();
     })
   })
+  describe('#createRequestByParams', function() {
+    it('should build request', function(done) {
+      var requestLine = {
+        method: 'GET',
+        url: 'HTTP://bing.com/',
+        revision: 'HTTP/1.1'
+      };
+      var headerFields = [
+        ['User-Agent', 'curl/7.35.0'],
+        ['Host', 'bing.com'],
+        ['Accept', '*/*'],
+        ['Proxy-Connection', 'Keep-Alive']
+      ];
+      
+      var result = request.createRequestByParams(requestLine, headerFields, 'Sample Body');
+      
+      expect(result.getRequestLine()).deep.equal(requestLine);
+      expect(result.getHeaderFields()).deep.equal(headerFields);
+      expect(result.getBody()).deep.equal('Sample Body');
+      
+      done();
+    })
+  })
 })
